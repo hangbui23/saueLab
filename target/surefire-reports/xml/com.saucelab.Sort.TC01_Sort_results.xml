@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Run On Chrome"
+           tests="4"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="14.059">
+  <properties />
+  
+  
+            <testcase name="TC02_SortAZ" time="3.283" classname="com.saucelab.Sort.TC01_Sort" />
+                <testcase name="TC04_SortPriceHighToLow" time="3.323" classname="com.saucelab.Sort.TC01_Sort" />
+                <testcase name="TC03_SortPriceLowToHigh" time="3.342" classname="com.saucelab.Sort.TC01_Sort" />
+                <testcase name="TC01_SortZA" time="4.111" classname="com.saucelab.Sort.TC01_Sort" />
+      
+</testsuite>

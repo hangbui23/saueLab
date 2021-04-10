@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Sauce Labs]">
+  <listeners>
+    <listener class-name="commons.MethodListener"/>
+    <listener class-name="reportConfig.ExtendReportListenerVersion4"/>
+    <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+  </listeners>
+  <test thread-count="5" name="Run On Chrome(failed)">
+    <parameter name="browser" value="chrome_ui"/>
+    <classes>
+      <class name="com.saucelab.Sort.TC01_Sort">
+        <methods>
+          <include name="TC01_SortZA"/>
+          <include name="TC04_SortPriceHighToLow"/>
+          <include name="beforeClass"/>
+          <include name="TC03_SortPriceLowToHigh"/>
+          <include name="TC02_SortAZ"/>
+          <include name="afterClass"/>
+        </methods>
+      </class> <!-- com.saucelab.Sort.TC01_Sort -->
+    </classes>
+  </test> <!-- Run On Chrome(failed) -->
+</suite> <!-- Failed suite [Sauce Labs] -->

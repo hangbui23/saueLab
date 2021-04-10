@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Sauce Labs" parallel="false">
+	<listeners>
+		<listener class-name="commons.MethodListener" />
+		<listener class-name="reportConfig.ExtendReportListenerVersion4" />
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+	</listeners>
+	<test name="Run On Chrome">
+		<parameter name="browser" value="chrome_ui"></parameter>
+		<classes>
+			<class name="com.saucelab.Sort.TC01_Sort" />
+			<!-- <class name="com.nopcomerce.users.Level18_Register_LogIn_FackerData_ManageData_Array" />
+ -->
+		</classes>
+	</test>
+	Test
+
+	<!-- <test name="Run On Firefox"> <parameter name="browser" value="firefox_ui"></parameter> <classes> <class name="com.nopcomerce.users.Level11_Register_LogIn_LogReport" /> </classes> </test> Test -->
+
+	<!-- <test name="Run On Chrome Headless"> <parameter name="browser" value="chrome_headless"></parameter> <classes> <class name="com.nopcomerce.users.Level4_Register_LogIn_MultipleBrowser" /> </classes> </test> Test <test name="Run On Firefox Headless"> 
+		<parameter name="browser" value="firefox_headless"></parameter> <classes> <class name="com.nopcomerce.users.Level4_Register_LogIn_MultipleBrowser" /> </classes> </test> Test -->
+	-->
+
+	<!-- <test name="Run On Edge"> <parameter name="browser" value="edge"></parameter> <classes> <class name="com.nopcomerce.users.Level7_Register_LogIn_DynamicLocator" /> </classes> </test> Test -->
+
+</suite> <!-- Suite -->

@@ -1,0 +1,3 @@
+com\saucelab\Sort\TC01_Sort.class
+com\saucelab\Sort\DatabaseConnection_Statement.class
+com\saucelab\Sort\DatabaseConnection_PreStatement.class
