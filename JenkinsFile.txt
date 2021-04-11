@@ -1,0 +1,28 @@
+node{
+    ansiColor('xterm') {
+}
+timestamps {
+}
+stage('1.Get code'){
+    git credentialsId: '6cb5f96e-5ba9-4567-a6b8-2b91f2198a7b', url: 'https://github.com/hangbui23/saueLab'
+}
+
+stage('2.Compipler'){
+    bat 'mvn clean'
+ }
+
+stage('3.Run Test'){
+    bat 'mvn  test -Denvironment=%environment%'
+}
+
+stage('4.Public Report'){
+publishHTML([
+allowMissing: false, 
+alwaysLinkToLastBuild: false, 
+keepAll: false, 
+reportDir: 'C:\\Users\\bhang230491\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\GitHub_Jenkins\\target\\surefire-reports\\html', 
+reportFiles: 'index.html', 
+reportName: 'HTML Report', 
+reportTitles: ''])
+}
+}
