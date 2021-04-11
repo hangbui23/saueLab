@@ -103,6 +103,17 @@ public class TC01_Sort extends BaseTest{
 		verifyTrue(productPage.isProdductPriceSortDesc());
 	}
 	
+	
+	@Step("Sort Price (low to high)")
+	@Test
+	public void TC06_SortPriceHighToLow(){
+		productPage.sleepInSecond(3);
+		log.info("Select Price (high to low) combobox");
+		productPage.selectSortCombobox("Price (high to low)");
+		
+		log.info("Verify product name sort Price (high to low)");
+		verifyTrue(productPage.isProdductPriceSortDesc());
+	}
 	@AfterClass
 	public void afterClass() {
 	driver.quit();
