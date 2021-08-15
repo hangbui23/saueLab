@@ -173,6 +173,11 @@ public class BasePage {
 		element.click();
 	}
 	
+	public String getUrlByUserNameAndPassword(String url, String userName, String password){
+		String[] spliUrl= url.split("//");
+		url= spliUrl[0] + "//" + userName + ":" + password + "@" + spliUrl[1];
+		return url
+	}
 	public void senKeyToElement(WebDriver driver, String locator, String value) {
 		findWebElement(driver,locator).clear();
 		findWebElement(driver,locator).sendKeys(value);
