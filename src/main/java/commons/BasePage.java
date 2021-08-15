@@ -178,6 +178,22 @@ public class BasePage {
 		url= spliUrl[0] + "//" + userName + ":" + password + "@" + spliUrl[1];
 		return url
 	}
+	
+	public void executeScriptAlert(String userName, String password){
+		String rootFolder = System.getProperty("user.dir");
+		String firefoxAuthen = rootFolder + "\\autoITScript\\authen_firefox.exe";
+		String chromeAuthen = rootFolder + "\\autoITScript\\authen_chrome.exe";
+		
+		if(driver.toString().contains("firefox")){
+			Runtime.getRuntime().exec(new String[]{firefoxAuthen,userName,password});
+		}
+		if(driver.toString().contains("chrome")){
+			Runtime.getRuntime().exec(new String[]{chromeAuthen,userName,password});
+		}
+	
+	
+	}
+	
 	public void senKeyToElement(WebDriver driver, String locator, String value) {
 		findWebElement(driver,locator).clear();
 		findWebElement(driver,locator).sendKeys(value);
