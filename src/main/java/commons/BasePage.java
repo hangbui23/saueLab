@@ -179,7 +179,7 @@ public class BasePage {
 		return url
 	}
 	
-	public void executeScriptAlert(String userName, String password){
+	public void executeScriptAlert(String url, String userName, String password){
 		String rootFolder = System.getProperty("user.dir");
 		String firefoxAuthen = rootFolder + "\\autoITScript\\authen_firefox.exe";
 		String chromeAuthen = rootFolder + "\\autoITScript\\authen_chrome.exe";
@@ -190,8 +190,7 @@ public class BasePage {
 		if(driver.toString().contains("chrome")){
 			Runtime.getRuntime().exec(new String[]{chromeAuthen,userName,password});
 		}
-	
-	
+		driver.get(url);
 	}
 	
 	public void senKeyToElement(WebDriver driver, String locator, String value) {
