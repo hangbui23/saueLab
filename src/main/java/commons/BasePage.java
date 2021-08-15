@@ -138,6 +138,30 @@ public class BasePage {
 		findWebElement(driver,locator).click();
 	}
 	
+	public boolean isElementEnabled(WebDriver driver, String locator) {
+		WebElement element = findWebElement(driver,locator);
+		if(element.isEnabled()){
+		return true;
+		}
+		else{
+		return false;
+		}
+	}
+	
+	public void removeDisabledAttributeByJS(WebDriver driver, String locator) {
+		WebElement element = findWebElement(driver,locator);
+		jsExecutor.executeScript("arguments[0].removeAttribute("disabled")",element);
+	}
+	
+	public void clickToElementByJS(WebDriver driver, String locator) {
+		if(driver.toString().contains("Edge")) {
+			sleepInMiliSecond(500);
+		}
+		WebElement element = findWebElement(driver,locator);
+		jsExecutor.executeScript("arguments[[0].click();",element)
+
+	}
+	
 	public void clickToElement(WebDriver driver, String locator, String...values) {
 		if(driver.toString().contains("Edge")) {
 			sleepInMiliSecond(500);
