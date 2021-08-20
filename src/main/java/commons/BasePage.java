@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import java.io.File;
 
 public class BasePage {
 	public void openUrl(WebDriver driver, String url) {
@@ -570,7 +571,7 @@ public class BasePage {
 	
 	//AbstractPageUI.UPLOAD_FILE_TYPE = //input[@type='file']
 	public void uploadMultipleFiles(WebDriver driver, String...fileNames){
-		String filePath = System.getProperty("user.dir")+"\\uploadFiles\\";
+		String filePath = System.getProperty("user.dir") + getDirectorySlash(uploadFiles);
 		String fullFileName="";
 		 for(String file:fileNames){
 			fullFileName = fullFileName + filePath + file +"\n";
@@ -613,6 +614,10 @@ public class BasePage {
 			return status;
 	}
 
+	public String getDirectorySlash(String folderName){
+	String separator = File.separator;
+	return separator + folderName + separator;
+	}
 	
 	public void sleepInSecond(int second) {
 		try {
