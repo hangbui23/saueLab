@@ -554,6 +554,11 @@ public class BasePage {
 		explicitWait.until(ExpectedConditions.elementToBeClickable(ByXpath(getDynamicLocator(locator,values))));
 	}
 	
+	public void waitForElementInvisible(WebDriver driver, String locator) {
+		WebDriverWait explicitWait = new WebDriverWait(driver, GlobalContants.LONG_TIMEOUT);
+		explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(ByXpath(locator)));
+	}
+	
 	public void waitForElementInvisible(WebDriver driver, String locator, String...values) {
 		WebDriverWait explicitWait = new WebDriverWait(driver, GlobalContants.SHORT_TIMEOUT);
 		overRideImplicitWait(driver,GlobalContants.SHORT_TIMEOUT);
@@ -562,6 +567,52 @@ public class BasePage {
 		System.out.println("End Date " + new Date().toString());
 		overRideImplicitWait(driver,GlobalContants.LONG_TIMEOUT);
 	}
+	
+	//AbstractPageUI.UPLOAD_FILE_TYPE = //input[@type='file']
+	public void uploadMultipleFiles(WebDriver driver, String...fileNames){
+		String filePath = System.getProperty("user.dir")+"\\uploadFiles\\";
+		String fullFileName="";
+		 for(String file:fileNames){
+			fullFileName = fullFileName + filePath + file +"\n";
+		}
+		fullFileName = fullFileName.trim();
+		findWebElement(driver, AbstractPageUI.UPLOAD_FILE_TYPE).sendKeys(fullFileName);
+	}
+
+	public boolean areMultipleFilesDisplay(WebDriver driver, String... fileNames){
+		boolean status = false;
+		int number = fileNames.length;
+		
+		waitForElementInvisible(driver,AbstractPageUI.ICON_WAIT);
+		sleepInSeconds(3);
+		List<WebElement> elements = findListWebElement(driver,AbstractPageUI.ALL_UPLOAD_BUTTON);
+		List<String> imageValues = new ArrayList<String>();
+		int i=0;
+		for(WebElement image: elements){
+		imageValues.add(image.getAttribute("src"));
+			i++;
+			if(i==number){
+			break;
+			}
+		}
+		
+		for(String fileName:fileNames){
+			String[]files = fileName.split("\\.");
+			fileName = file[0].toLowerCase();
+			for(i=0;i<imageValues.size();i++){
+			if(imageValue.get(i).contains(fileName)){
+			status=false;
+				if(i==imageValues.size()-1){
+				return status;
+				}else{
+				status=true;
+					break;
+				}
+			}
+		}
+			return status;
+	}
+
 	
 	public void sleepInSecond(int second) {
 		try {
