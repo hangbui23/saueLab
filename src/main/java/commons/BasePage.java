@@ -613,6 +613,8 @@ public class BasePage {
 		}
 			return status;
 	}
+		
+	//LOADED_FILE_NAME = "//a[text()="%s"]"
 	 public boolean areFileNameLoadedSuccess(String[] fileNames){
 	 	boolean status=false;
 		for(String file : fileNames){
