@@ -571,7 +571,7 @@ public class BasePage {
 	
 	//AbstractPageUI.UPLOAD_FILE_TYPE = //input[@type='file']
 	public void uploadMultipleFiles(WebDriver driver, String...fileNames){
-		String filePath = System.getProperty("user.dir") + getDirectorySlash(uploadFiles);
+		String filePath = System.getProperty("user.dir") + getDirectorySlash("uploadFiles");
 		String fullFileName="";
 		 for(String file:fileNames){
 			fullFileName = fullFileName + filePath + file +"\n";
