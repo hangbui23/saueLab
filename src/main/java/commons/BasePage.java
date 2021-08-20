@@ -613,6 +613,19 @@ public class BasePage {
 		}
 			return status;
 	}
+	 public boolean areFileNameLoadedSuccess(String[] fileNames){
+	 	boolean status=false;
+		for(String file : fileNames){
+		    if(isElementDisplay(driver,AbstractPageUI.LOADED_FILE_NAME,file)){
+			status=true;
+		     }
+		    else{
+			return status;
+			}
+		}
+		 return status;
+		 
+	 }	
 
 	public String getDirectorySlash(String folderName){
 	String separator = File.separator;
