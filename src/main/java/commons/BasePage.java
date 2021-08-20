@@ -569,7 +569,7 @@ public class BasePage {
 		overRideImplicitWait(driver,GlobalContants.LONG_TIMEOUT);
 	}
 	
-	//AbstractPageUI.UPLOAD_FILE_TYPE = //input[@type='file']
+	//AbstractPageUI.UPLOAD_FILE_TYPE = //input[@type='file'], String[] file={"abcd.jpg","defh.jpg"}
 	public void uploadMultipleFiles(WebDriver driver, String...fileNames){
 		String filePath = System.getProperty("user.dir") + getDirectorySlash("uploadFiles");
 		String fullFileName="";
