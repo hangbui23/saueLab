@@ -597,6 +597,7 @@ public class BasePage {
 			}
 		}
 		
+		//.,*,+,- is special character so need use \\. to split
 		for(String fileName:fileNames){
 			String[]files = fileName.split("\\.");
 			fileName = file[0].toLowerCase();
