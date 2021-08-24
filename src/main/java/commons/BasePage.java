@@ -487,7 +487,48 @@ public class BasePage {
 		jsExecutor.executeScript("arguments[0].removeAttribute('" + attributeRemove + "');", element);
 	}
 
-	public boolean areJQueryAndJSLoadedSuccess(WebDriver driver) {
+	
+	public boolean isJQueryLoadedSuccess(WebDriver driver) {
+		WebDriverWait explicitWait = new WebDriverWait(driver, GlobalContants.LONG_TIMEOUT);
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+
+		ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
+			@Override
+			public Boolean apply(WebDriver driver) {
+				return ((Boolean) jsExecutor.executeScript("return (window.jQuery!=null)&&(jQuery.active === 0);");
+				} 
+			};
+			return explicitWait.until(jQueryLoad);
+	}
+	
+					
+	public boolean isJQueryAndAjaxIconLoadedSuccess(WebDriver driver) {
+		WebDriverWait explicitWait = new WebDriverWait(driver, GlobalContants.LONG_TIMEOUT);
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+
+		ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
+			@Override
+			public Boolean apply(WebDriver driver) {
+				try {
+					return ((Long) jsExecutor.executeScript("return jQuery.active") == 0);
+				} catch (Exception e) {
+					return true;
+				}
+			}
+		};
+
+		ExpectedCondition<Boolean> ajaxIconLoading = new ExpectedCondition<Boolean>() {
+			@Override
+			public Boolean apply(WebDriver driver) {
+				return jsExecutor.executeScript("return $('.raDiv).is('.visible')").toString().equals("false");
+			}
+		};
+
+		return explicitWait.until(jQueryLoad) && explicitWait.until(ajaxIconLoading);
+	}
+	
+	
+	public boolean isJQueryAndPageLoadedSuccess(WebDriver driver) {
 		WebDriverWait explicitWait = new WebDriverWait(driver, GlobalContants.LONG_TIMEOUT);
 		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
 
