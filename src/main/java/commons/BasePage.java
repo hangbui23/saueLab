@@ -520,7 +520,7 @@ public class BasePage {
 		ExpectedCondition<Boolean> ajaxIconLoading = new ExpectedCondition<Boolean>() {
 			@Override
 			public Boolean apply(WebDriver driver) {
-				return jsExecutor.executeScript("return $('.raDiv).is('.visible')").toString().equals("false");
+				return jsExecutor.executeScript("return $('.raDiv').is('.visible')").toString().equals("false");
 			}
 		};
 
