@@ -17,9 +17,16 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import pageUIs.BaseUIs;
+
 import java.io.File;
+import java.io.IOException;
 
 public class BasePage {
+	
+	WebDriverWait  explicitWait;
+	
 	public void openUrl(WebDriver driver, String url) {
 		driver.get(url);
 	}
@@ -49,7 +56,7 @@ public class BasePage {
 	}
 	
 	public void waitForAlertPresence(WebDriver driver) {
-		WebDriverWait explicitWait = new WebDriverWait(driver, GlobalContants.LONG_TIMEOUT);
+		explicitWait = new WebDriverWait(driver, GlobalContants.LONG_TIMEOUT);
 		explicitWait.until(ExpectedConditions.alertIsPresent());
 	}
 	
@@ -150,18 +157,11 @@ public class BasePage {
 	}
 	
 	public void removeDisabledAttributeByJS(WebDriver driver, String locator) {
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
 		WebElement element = findWebElement(driver,locator);
-		jsExecutor.executeScript("arguments[0].removeAttribute("disabled")",element);
+		jsExecutor.executeScript("arguments[0].removeAttribute('disabled')",element);
 	}
 	
-	public void clickToElementByJS(WebDriver driver, String locator) {
-		if(driver.toString().contains("Edge")) {
-			sleepInMiliSecond(500);
-		}
-		WebElement element = findWebElement(driver,locator);
-		jsExecutor.executeScript("arguments[[0].click();",element)
-
-	}
 	
 	public void clickToElement(WebDriver driver, String locator, String...values) {
 		if(driver.toString().contains("Edge")) {
@@ -177,10 +177,10 @@ public class BasePage {
 	public String getUrlByUserNameAndPassword(String url, String userName, String password){
 		String[] spliUrl= url.split("//");
 		url= spliUrl[0] + "//" + userName + ":" + password + "@" + spliUrl[1];
-		return url
+		return url;
 	}
 	
-	public void executeScriptAlert(String url, String userName, String password){
+	public void executeScriptAlert(WebDriver driver,String url, String userName, String password) throws IOException{
 		String rootFolder = System.getProperty("user.dir");
 		String firefoxAuthen = rootFolder + "\\autoITScript\\authen_firefox.exe";
 		String chromeAuthen = rootFolder + "\\autoITScript\\authen_chrome.exe";
@@ -241,12 +241,14 @@ public class BasePage {
 		}
 	}
   
-	public String getHiddenText(String cssLocator){
+	public String getHiddenText(WebDriver driver,String cssLocator){
 		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-		retrun (String) jsExecutor.executeScript("return document.querySelector(\""+cssLocator+\").textContent");
+		return (String) jsExecutor.executeScript("return document.querySelector(" +cssLocator+ ").textContent");
 	}
 	
-	public void selectTheItemInEditableDropdown(String parentXpath, String childXpath, String expectedItem){
+	public void selectTheItemInEditableDropdown(WebDriver driver, String parentXpath, String childXpath, String expectedItem){
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+		explicitWait= new WebDriverWait(driver,30);
 		driver.findElement(By.xpath(parentXpath)).clear();
 		sleepInSecond(1);
 		explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(ByXpath(childXpath)));
@@ -262,7 +264,8 @@ public class BasePage {
 	}
 	
 	
-	public void selectMultiItemInDropdown(String parentXpath, String childXpath, String[] expectedValueItem) {
+	public void selectMultiItemInDropdown(WebDriver driver, String parentXpath, String childXpath, String[] expectedValueItem) {
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
 		// 1: click vào cái dropdown cho nó xổ hết tất cả các giá trị ra
 		driver.findElement(By.xpath(parentXpath)).click();
 
@@ -294,7 +297,7 @@ public class BasePage {
 		}
 	}
 	
-	public boolean areItemSelected(String[] months) {
+	public boolean areItemSelected(WebDriver driver, String[] months) {
 		List<WebElement> itemSelected = driver.findElements(By.xpath("//li[@class='selected']//input"));
 		int numberItemSelected = itemSelected.size();
 
@@ -489,13 +492,13 @@ public class BasePage {
 
 	
 	public boolean isJQueryLoadedSuccess(WebDriver driver) {
-		WebDriverWait explicitWait = new WebDriverWait(driver, GlobalContants.LONG_TIMEOUT);
+		explicitWait = new WebDriverWait(driver, GlobalContants.LONG_TIMEOUT);
 		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
 
 		ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
 			@Override
 			public Boolean apply(WebDriver driver) {
-				return ((Boolean) jsExecutor.executeScript("return (window.jQuery!=null)&&(jQuery.active === 0);");
+				return (Boolean) jsExecutor.executeScript("return (window.jQuery!=null) && (jQuery.active === 0);");
 				} 
 			};
 			return explicitWait.until(jQueryLoad);
@@ -610,7 +613,7 @@ public class BasePage {
 		overRideImplicitWait(driver,GlobalContants.LONG_TIMEOUT);
 	}
 	
-	//AbstractPageUI.UPLOAD_FILE_TYPE = //input[@type='file'], String[] file={"abcd.jpg","defh.jpg"}
+	//BaseUIs.UPLOAD_FILE_TYPE = //input[@type='file'], String[] file={"abcd.jpg","defh.jpg"}
 	public void uploadMultipleFiles(WebDriver driver, String...fileNames){
 		String filePath = System.getProperty("user.dir") + getDirectorySlash("uploadFiles");
 		String fullFileName="";
@@ -618,16 +621,16 @@ public class BasePage {
 			fullFileName = fullFileName + filePath + file +"\n";
 		}
 		fullFileName = fullFileName.trim();
-		findWebElement(driver, AbstractPageUI.UPLOAD_FILE_TYPE).sendKeys(fullFileName);
+		findWebElement(driver, BaseUIs.UPLOAD_FILE_TYPE).sendKeys(fullFileName);
 	}
 
 	public boolean areMultipleFilesDisplay(WebDriver driver, String... fileNames){
 		boolean status = false;
 		int number = fileNames.length;
 		
-		waitForElementInvisible(driver,AbstractPageUI.ICON_WAIT);
-		sleepInSeconds(3);
-		List<WebElement> elements = findListWebElement(driver,AbstractPageUI.ALL_UPLOAD_BUTTON);
+		waitForElementInvisible(driver,BaseUIs.ICON_WAIT);
+		sleepInSecond(3);
+		List<WebElement> elements = findListWebElement(driver,BaseUIs.ALL_UPLOAD_BUTTON);
 		List<String> imageValues = new ArrayList<String>();
 		int i=0;
 		for(WebElement image: elements){
@@ -641,9 +644,9 @@ public class BasePage {
 		//.,*,+,- is special character so need use \\. to split
 		for(String fileName:fileNames){
 			String[]files = fileName.split("\\.");
-			fileName = file[0].toLowerCase();
+			fileName = files[0].toLowerCase();
 			for(i=0;i<imageValues.size();i++){
-			if(imageValue.get(i).contains(fileName)){
+			if(imageValues.get(i).contains(fileName)){
 			status=false;
 				if(i==imageValues.size()-1){
 				return status;
@@ -653,14 +656,15 @@ public class BasePage {
 				}
 			}
 		}
+	}
 			return status;
 	}
 		
 	//LOADED_FILE_NAME = "//a[text()="%s"]"
-	 public boolean areFileNameLoadedSuccess(String[] fileNames){
+	 public boolean areFileNameLoadedSuccess(WebDriver driver, String[] fileNames){
 	 	boolean status=false;
 		for(String file : fileNames){
-		    if(isElementDisplay(driver,AbstractPageUI.LOADED_FILE_NAME,file)){
+		    if(isElementDisplay(driver,BaseUIs.LOADED_FILE_NAME,file)){
 			status=true;
 		     }
 		    else{
