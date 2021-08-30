@@ -33,6 +33,7 @@ public class BaseTest {
 	
 	protected WebDriver getBrowserName(String browser) {
 		if(browser.contentEquals("chrome_ui")) {
+		//WebDriverManager.chromedriver().setup()=System.setProperty("webdriver.chromedriver.driver",projectPath,".\\browser\chromedriver.exe")
 		WebDriverManager.chromedriver().setup();
 		ChromeOptions options = new ChromeOptions();
 		options.setExperimentalOption("useAutomationExtension", false);
