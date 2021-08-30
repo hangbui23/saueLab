@@ -20,6 +20,8 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class BaseTest {
 	private WebDriver driver;
 	protected final Log log;
+	public String osName = System.getProperty("os.name");
+	public String projectPath = System.getProperty("user.dir");
 	
 	protected BaseTest(){
 		log=LogFactory.getLog(getClass());
@@ -28,6 +30,7 @@ public class BaseTest {
 	public WebDriver getDriver() {
 		return driver;
 	}
+	
 	protected WebDriver getBrowserName(String browser) {
 		if(browser.contentEquals("chrome_ui")) {
 		WebDriverManager.chromedriver().setup();
@@ -99,7 +102,6 @@ public class BaseTest {
 		return driver;
 	}
 	
-	
 	protected void closeBrowserAndDriver(WebDriver driver) {
 		try {
 			// Get ra tên của OS và convert qua chữ thường
@@ -144,6 +146,33 @@ public class BaseTest {
 		} catch (Exception e) {
 			log.info(e.getMessage());
 		}
+	}
+	
+	private String getDirectorySlash(String folderName) {
+		if (isMac() || isUnix() || isSolaris()) {
+			folderName = "/" + folderName + "/";
+		} else if (isWindows()) {
+			folderName = "\\" + folderName + "\\";
+		} else {
+			folderName = null;
+		}
+		return folderName;
+	}
+	
+	private boolean isWindows() {
+		return (osName.toLowerCase().indexOf("win")>=0);	
+	}
+	
+	private boolean isMac() {
+		return (osName.toLowerCase().indexOf("mac")>=0);	
+	}
+	
+	private boolean isUnix() {
+		return (osName.toLowerCase().indexOf("nix")>=0 || osName.toLowerCase().indexOf("nux")>=0);	
+	}
+	
+	private boolean isSolaris() {
+		return (osName.toLowerCase().indexOf("sunos") >= 0);
 	}
 	
 	private boolean checkTrue(boolean condition) {
