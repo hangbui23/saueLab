@@ -649,7 +649,7 @@ public class BasePage {
 			String[]files = fileName.split("\\.");
 			fileName = files[0].toLowerCase();
 			for(i=0;i<imageValues.size();i++){
-			if(imageValues.get(i).contains(fileName)){
+			if(!imageValues.get(i).contains(fileName)){
 			status=false;
 				if(i==imageValues.size()-1){
 				return status;
