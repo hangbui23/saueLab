@@ -653,13 +653,14 @@ public class BasePage {
 			status=false;
 				if(i==imageValues.size()-1){
 				return status;
-				}else{
-				status=true;
-					break;
 				}
+			}else{
+				status=true;
+				break;
 			}
 		}
 	}
+
 			return status;
 	}
 		
