@@ -3,6 +3,7 @@
 	<listeners>
 		<listener class-name="commons.MethodListener" />
 		<listener class-name="reportConfig.ExtendReportListenerVersion4" />
+		<listener class-name="reportConfig.AllureTestListener" />
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
 		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
 	</listeners>
