@@ -139,6 +139,6 @@ public class TC01_Sort extends BaseTest{
 	
 	@AfterClass
 	public void afterClass() {
-	driver.quit();
+	closeBrowserAndDriver(driver);
 	}
 }
