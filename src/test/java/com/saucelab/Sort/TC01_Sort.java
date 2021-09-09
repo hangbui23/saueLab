@@ -5,6 +5,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import pageObjects.HomePageObject;
 import pageObjects.PageGeneratorManager;
@@ -46,7 +50,8 @@ public class TC01_Sort extends BaseTest{
 		productPage = homePage.clickOnLogInButton();
 	}
 
-	@Step("Sort Z-A")
+	@Description("TC01 - Sort Z-A")
+	@Severity(SeverityLevel.NORMAL)
 	@Test
 	public void TC01_SortZA(){
 		productPage.sleepInSecond(3);
@@ -58,7 +63,8 @@ public class TC01_Sort extends BaseTest{
 		verifyTrue(productPage.isProdductNameSortDesc());
 	}
 	
-	@Step("Sort A-Z")
+	@Description("TC02 - Sort A-Z")
+	@Severity(SeverityLevel.BLOCKER)
 	@Test
 	public void TC02_SortAZ(){
 		productPage.sleepInSecond(3);
@@ -69,7 +75,8 @@ public class TC01_Sort extends BaseTest{
 		verifyTrue(productPage.isProdductNameSortAsc());
 	}
 	
-	@Step("Sort Price (low to high)")
+	@Description("TC03 - Sort Price (low to high)")
+	@Severity(SeverityLevel.TRIVIAL)
 	@Test
 	public void TC03_SortPriceLowToHigh(){
 		productPage.sleepInSecond(3);
@@ -80,7 +87,8 @@ public class TC01_Sort extends BaseTest{
 		verifyTrue(productPage.isProdductPriceSortAsc());
 	}
 	
-	@Step("Sort Price (low to high)")
+	@Description("TC04 - Sort Price (low to high)")
+	@Severity(SeverityLevel.CRITICAL)
 	@Test
 	public void TC04_SortPriceHighToLow(){
 		productPage.sleepInSecond(3);
@@ -92,7 +100,8 @@ public class TC01_Sort extends BaseTest{
 	}
 	
 	
-	@Step("Sort Price (low to high)")
+	@Step("TC05 - Sort Price (low to high)")
+	@Severity(SeverityLevel.NORMAL)
 	@Test
 	public void TC05_SortPriceHighToLow(){
 		productPage.sleepInSecond(3);
@@ -104,7 +113,8 @@ public class TC01_Sort extends BaseTest{
 	}
 	
 	
-	@Step("Sort Price (low to high)")
+	@Step("TC06 - Sort Price (low to high)")
+	@Severity(SeverityLevel.MINOR)
 	@Test
 	public void TC06_SortPriceHighToLow(){
 		productPage.sleepInSecond(3);
@@ -115,7 +125,8 @@ public class TC01_Sort extends BaseTest{
 		verifyTrue(productPage.isProdductPriceSortDesc());
 	}
 	
-	@Step("Sort Price (low to high)")
+	@Step("TC07 - Sort Price (low to high)")
+	@Severity(SeverityLevel.BLOCKER)
 	@Test
 	public void TC07_SortPriceHighToLow(){
 		productPage.sleepInSecond(3);
@@ -123,10 +134,11 @@ public class TC01_Sort extends BaseTest{
 		productPage.selectSortCombobox("Price (high to low)");
 		
 		log.info("Verify product name sort Price (high to low)");
-		verifyTrue(productPage.isProdductPriceSortDesc());
+		verifyFalse(productPage.isProdductPriceSortDesc());
 	}
 	
-	@Step("Sort Price (low to high)")
+	@Step("TC08 - Sort Price (low to high)")
+	@Severity(SeverityLevel.TRIVIAL)
 	@Test
 	public void TC08_SortPriceHighToLow(){
 		productPage.sleepInSecond(3);
@@ -137,8 +149,8 @@ public class TC01_Sort extends BaseTest{
 		verifyTrue(productPage.isProdductPriceSortDesc());
 	}
 	
-	@AfterClass
+	@AfterClass(alwaysRun = true)
 	public void afterClass() {
-	closeBrowserAndDriver(driver);
+		closeBrowserAndDriver(driver);
 	}
 }
