@@ -188,8 +188,7 @@ public class BaseTest {
 	
 	public void deleteAllFileInFolder() {
 		try {
-			String workingDir = System.getProperty("usr.dir");
-			String pathFolderDownload = workingDir + "\\ReportNGScreenShots";
+			String pathFolderDownload = projectPath + "\\ReportNGScreenShots";
 			File file = new File(pathFolderDownload);
 			File[] listOfFile = file.listFiles();
 			for (int i = 0; i < listOfFile.length; i++) {
