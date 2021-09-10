@@ -116,9 +116,9 @@ public class BasePage {
 		return By.xpath(locator);
 	}
 	
-	public By ByXpath(String locator,String...values) {
-		return By.xpath(getDynamicLocator(locator,values));
-	}
+//	public By ByXpath(String locator,String...values) {
+//		return By.xpath(getDynamicLocator(locator,values));
+//	}
 	
 	public WebElement findWebElement(WebDriver driver, String locator) {
 		return driver.findElement(ByXpath(locator));
@@ -144,6 +144,7 @@ public class BasePage {
 	}
 	
 	public void clickToElement(WebDriver driver, String locator) {
+		highlightElement(driver, locator);
 		if(driver.toString().contains("Edge")) {
 			sleepInMiliSecond(500);
 		}
@@ -198,16 +199,19 @@ public class BasePage {
 	}
 	
 	public void senKeyToElement(WebDriver driver, String locator, String value) {
+		highlightElement(driver, locator);
 		findWebElement(driver,locator).clear();
 		findWebElement(driver,locator).sendKeys(value);
 	}
 	
 	public void senKeyToElement(WebDriver driver, String locator, String value, String... values) {
+		highlightElement(driver, locator);
 		findWebElement(driver,getDynamicLocator(locator,values)).sendKeys(value);
 	}
 	
 	public void selectItemInDropDown(WebDriver driver, String locator, String value) {
 		Select element = new Select(findWebElement(driver,locator));
+		highlightElement(driver, locator);
 		element.selectByVisibleText(value);
 	}
 	
@@ -354,6 +358,10 @@ public class BasePage {
 		return findListWebElement(driver, locator).size();
 	}
 	
+	public int getElementSize(WebDriver driver, String locator, String...values) {
+		return findListWebElement(driver, getDynamicLocator(locator,values)).size();
+	}
+	
 	public void checkTheRadioOrCheckbox(WebDriver driver, String locator) {
 		WebElement element = findWebElement(driver, locator);
 		if(!element.isSelected()) {
@@ -493,6 +501,13 @@ public class BasePage {
 		jsExecutor.executeScript("arguments[0].removeAttribute('" + attributeRemove + "');", element);
 	}
 
+	//handle table
+	public void inputValueToTextBoxByColumnAndRowIndex(WebDriver driver,String columnName, String rowIndex,String value) {
+		waitForElementVisible(driver, BaseUIs.COLUMN_POSITION, columnName);
+		int columnIndex = getElementSize(driver, BaseUIs.COLUMN_POSITION, columnName) + 1;
+		senKeyToElement(driver, BaseUIs.TEXTBOX_BY_COLUMN_ROW_INDEX, value, rowIndex,String.valueOf(columnIndex));
+	}
+	
 	
 	public boolean isJQueryLoadedSuccess(WebDriver driver) {
 		explicitWait = new WebDriverWait(driver, GlobalContants.LONG_TIMEOUT);
@@ -649,18 +664,17 @@ public class BasePage {
 			String[]files = fileName.split("\\.");
 			fileName = files[0].toLowerCase();
 			for(i=0;i<imageValues.size();i++){
-			if(!imageValues.get(i).contains(fileName)){
+			if(imageValues.get(i).contains(fileName)){
 			status=false;
 				if(i==imageValues.size()-1){
 				return status;
-				}
-			}else{
+				}else{
 				status=true;
-				break;
+					break;
+				}
 			}
 		}
 	}
-
 			return status;
 	}
 		
