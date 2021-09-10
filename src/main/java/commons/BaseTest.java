@@ -1,10 +1,12 @@
 package commons;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +17,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.Assert;
 import org.testng.Reporter;
+import org.testng.annotations.BeforeSuite;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseTest {
@@ -33,7 +37,6 @@ public class BaseTest {
 	
 	protected WebDriver getBrowserName(String browser) {
 		if(browser.contentEquals("chrome_ui")) {
-		//WebDriverManager.chromedriver().setup()=System.setProperty("webdriver.chrome.driver",projectPath,".\\browser\chromedriver.exe")
 		WebDriverManager.chromedriver().setup();
 		ChromeOptions options = new ChromeOptions();
 		options.setExperimentalOption("useAutomationExtension", false);
@@ -174,6 +177,30 @@ public class BaseTest {
 	
 	private boolean isSolaris() {
 		return (osName.toLowerCase().indexOf("sunos") >= 0);
+	}
+	
+	@BeforeSuite
+	public void deleteAllFilesInReportNGScreenshot() {
+		System.out.println("-----------START DELETE FOLDER-----------");
+		deleteAllFileInFolder();
+		System.out.println("-----------END DELETE FOLDER-----------");
+	}
+	
+	public void deleteAllFileInFolder() {
+		try {
+			String workingDir = System.getProperty("usr.dir");
+			String pathFolderDownload = workingDir + "\\ReportNGScreenShots";
+			File file = new File(pathFolderDownload);
+			File[] listOfFile = file.listFiles();
+			for (int i = 0; i < listOfFile.length; i++) {
+				if (listOfFile[i].isFile()) {
+					System.out.println(listOfFile[i].getName());
+					new File(listOfFile[i].toString()).delete();
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	private boolean checkTrue(boolean condition) {
